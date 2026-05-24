@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -136,5 +138,74 @@ public class VideojuegoJdbc {
 			}
 		}
 		return videoJuego;
+	}
+
+	public static List<Videojuego> listar() {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		List<Videojuego> videojuegos = new ArrayList<>();
+
+		String sql = """
+				select * from videojuegos
+				""";
+
+		try {
+			con = Conexion.getConnection();
+			ps = con.prepareStatement(sql);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				String codigo = rs.getString("codigo");
+				String nombre = rs.getString("nombre");
+				String plataforma = rs.getString("plataforma");
+				double precio = rs.getDouble("precio");
+				boolean disponible = rs.getBoolean("disponible");
+				String genero = rs.getString("genero");
+
+				Videojuego videojuego = new Videojuego(codigo, nombre, plataforma, precio, disponible, genero);
+
+				videojuegos.add(videojuego);
+			}
+
+			log.info("Listado de videojuegos realizado");
+		} catch (SQLException e) {
+			log.error("Error SQL al listar videojuegos", e);
+			throw new RuntimeException("Error al listar videojuegos: " + e.getMessage());
+
+		} finally {
+
+			try {
+				if (rs != null) {
+					rs.close();
+					log.info("ResultSet cerrado al listar");
+				}
+			} catch (SQLException e) {
+				log.error("Error al cerrar ResultSet al listar: " + e.getMessage());
+			}
+
+			try {
+				if (ps != null) {
+					ps.close();
+					log.info("PreparedStatement cerrado al listar");
+				}
+			} catch (SQLException e) {
+				log.error("Error al cerrar PreparedStatement al listar: " + e.getMessage());
+			}
+
+			try {
+				if (con != null) {
+					con.close();
+					log.info("Conexion cerrada al listar");
+				}
+			} catch (SQLException e) {
+				log.error("Error al cerrar Connection al listar: " + e.getMessage());
+			}
+		}
+		return videojuegos;
 	}
 }
