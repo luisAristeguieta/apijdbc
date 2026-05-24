@@ -208,4 +208,67 @@ public class VideojuegoJdbc {
 		}
 		return videojuegos;
 	}
+
+	public static Videojuego actualizar(Videojuego videojuegoActualizado) {
+
+		Videojuego videojuegoExistente = buscar(videojuegoActualizado.getCodigo());
+
+		if (videojuegoExistente == null) {
+			log.info("No existe videojuego con codigo " + videojuegoActualizado.getCodigo());
+			return null;
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		String sql = """
+				update videojuegos
+				set nombre = ?, plataforma = ?, precio = ?, disponible = ?, genero = ? where codigo = ?
+				""";
+
+		try {
+			con = Conexion.getConnection();
+			ps = con.prepareStatement(sql);
+
+			ps.setString(1, videojuegoActualizado.getNombre());
+			ps.setString(2, videojuegoActualizado.getPlataforma());
+			ps.setDouble(3, videojuegoActualizado.getPrecio());
+			ps.setBoolean(4, videojuegoActualizado.isDisponible());
+			ps.setString(5, videojuegoActualizado.getGenero());
+			ps.setString(6, videojuegoActualizado.getCodigo());
+
+			int filas = ps.executeUpdate();
+
+			log.info("Videojuego(s) actualizado(s): " + filas);
+
+			if (filas > 0) {
+				return videojuegoActualizado;
+			}
+
+		} catch (SQLException e) {
+			log.error("Error SQL al actualizar videojuego", e);
+			throw new RuntimeException("Error al actualizar videojuego: " + e.getMessage());
+		} finally {
+
+			try {
+				if (ps != null) {
+					ps.close();
+					log.info("PreparedStatement cerrado al actualizar");
+				}
+			} catch (SQLException e) {
+				log.error("Error al cerrar PreparedStatement al actualizar: " + e.getMessage());
+			}
+
+			try {
+				if (con != null) {
+					con.close();
+					log.info("Conexion cerrada al actualizar");
+				}
+			} catch (SQLException e) {
+				log.error("Error al cerrar Connection al actualizar: " + e.getMessage());
+			}
+		}
+		
+		return null;
+	}
 }
