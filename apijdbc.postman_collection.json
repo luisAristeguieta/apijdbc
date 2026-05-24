@@ -1,0 +1,164 @@
+{
+  "info": {
+    "_postman_id": "261ff580-e604-45e8-8921-37a3fb7759a5",
+    "name": "apijdbc",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50753649",
+    "_collection_link": "https://go.postman.co/collection/50753649-261ff580-e604-45e8-8921-37a3fb7759a5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Crear VideoJuego",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"codigo\": \"VG004\",\r\n    \"nombre\": \"Roblox\",\r\n    \"plataforma\": \"PC\",\r\n    \"precio\": 0.00,\r\n    \"disponible\": true,\r\n    \"genero\": \"Sandbox\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/videojuegos/jdbc",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videojuegos",
+            "jdbc"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar VideoJuego",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"codigo\": \"VG004\",\r\n    \"nombre\": \"Roblox\",\r\n    \"plataforma\": \"PC\",\r\n    \"precio\": 0.00,\r\n    \"disponible\": true,\r\n    \"genero\": \"Sandbox\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/videojuegos/jdbc",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videojuegos",
+            "jdbc"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Buscar por Codigo",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"codigo\": \"VG004\",\r\n    \"nombre\": \"Roblox\",\r\n    \"plataforma\": \"PC\",\r\n    \"precio\": 0.00,\r\n    \"disponible\": true,\r\n    \"genero\": \"Sandbox\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/videojuegos/jdbc/VG001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videojuegos",
+            "jdbc",
+            "VG001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar VideoJuego",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"codigo\": \"VG001\",\r\n    \"nombre\": \"Minecraft Deluxe Premiun\",\r\n    \"plataforma\": \"PC\",\r\n    \"precio\": 100.99,\r\n    \"disponible\": true,\r\n    \"genero\": \"Sandbox\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/videojuegos/jdbc",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videojuegos",
+            "jdbc"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar Video Juego",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"codigo\": \"VG001\",\r\n    \"nombre\": \"Minecraft Deluxe Premiun\",\r\n    \"plataforma\": \"PC\",\r\n    \"precio\": 100.99,\r\n    \"disponible\": true,\r\n    \"genero\": \"Sandbox\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/videojuegos/jdbc/VG002",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "videojuegos",
+            "jdbc",
+            "VG002"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
