@@ -268,7 +268,62 @@ public class VideojuegoJdbc {
 				log.error("Error al cerrar Connection al actualizar: " + e.getMessage());
 			}
 		}
-		
+
 		return null;
 	}
+
+	public static boolean eliminar(String codigo) {
+
+		Videojuego videojuegoExistente = buscar(codigo);
+
+		if (videojuegoExistente == null) {
+			log.info("No existe videojuego con codigo " + codigo);
+			return false;
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		String sql = """
+				delete from videojuegos where codigo = ?
+				""";
+
+		try {
+
+			con = Conexion.getConnection();
+			ps = con.prepareStatement(sql);
+
+			ps.setString(1, codigo);
+			int filas = ps.executeUpdate();
+			
+			log.info("Videojuego(s) eliminado(s): " + filas);
+			return filas > 0;
+
+		} catch (SQLException e) {
+
+			log.error("Error SQL al eliminar videojuego", e);
+			throw new RuntimeException("Error al eliminar videojuego", e);
+
+		} finally {
+
+			try {
+				if (ps != null) {
+					ps.close();
+					log.info("PreparedStatement cerrado al eliminar");
+				}
+			} catch (SQLException e) {
+				log.error("Error al cerrar PreparedStatement al eliminar: " + e.getMessage());
+			}
+
+			try {
+				if (con != null) {
+					con.close();
+					log.info("Conexion cerrada al eliminar");
+				}
+			} catch (SQLException e) {
+				log.error("Error al cerrar Connection al eliminar: " + e.getMessage());
+			}
+		}
+	}
+
 }
